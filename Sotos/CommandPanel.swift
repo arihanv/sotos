@@ -12,6 +12,7 @@ struct CommandPanel: View {
                 Color.clear.ignoresSafeArea().onTapGesture {
                     withAnimation { isVisible = false }
                 }
+                
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
                         Image(systemName: "gearshape.fill")

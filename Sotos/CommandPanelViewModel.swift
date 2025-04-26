@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import HotKey
+import Combine
 
 class CommandPanelViewModel: ObservableObject {
     @Published var isPanelVisible = false
@@ -116,5 +117,37 @@ class CommandPanelViewModel: ObservableObject {
 
     func openSettings() {
         NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+    }
+}
+
+class GlobalOverlayManager {
+    static let shared = GlobalOverlayManager()
+    private var overlayWindow: NSPanel?
+    private var cancellable: AnyCancellable?
+
+    func showOverlay() {
+        guard overlayWindow == nil else { return }
+        let panel = NSPanel(
+            contentRect: NSRect(x: 100, y: 10, width: 100, height: 100),
+            styleMask: [.borderless, .nonactivatingPanel],
+            backing: .buffered,
+            defer: false
+        )
+        panel.isReleasedWhenClosed = false
+        panel.level = .statusBar
+        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
+        panel.hasShadow = false
+        panel.ignoresMouseEvents = true
+        panel.title = ""
+        panel.contentView = NSHostingView(rootView: TabOverlay())
+        panel.orderFrontRegardless()
+        overlayWindow = panel
+    }
+
+    func hideOverlay() {
+        overlayWindow?.orderOut(nil)
+        overlayWindow = nil
     }
 }

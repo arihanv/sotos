@@ -9,35 +9,37 @@ import SwiftUI
 import AppKit
 import Foundation
 
-struct ContentView: View {
+struct TabOverlay: View {
     @State private var shouldShow: Bool = true
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             if shouldShow {
                 RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color.yellow.opacity(0.5), lineWidth: 1)
-                    .frame(width: 150, height: 30)
+                    .stroke(Color.yellow.opacity(0.8), lineWidth: 2)
+                    .background(RoundedRectangle(cornerRadius: 4).fill(Color.black.opacity(0.85)))
+                    .frame(width: 150, height: 34)
                     .overlay(
                         HStack(spacing: 4) {
                             Text("TAB")
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(Color.gray.opacity(0.3))
+                                .background(Color.yellow.opacity(0.7))
+                                .foregroundColor(.black)
                                 .cornerRadius(12)
                             Text("to jump")
+                                .foregroundColor(.white)
                         }
-                        .foregroundColor(.white)
                         .font(.system(size: 14, weight: .medium, design: .monospaced))
                     )
-                    .position(x: 100, y: 100)
+                    .padding(16)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .ignoresSafeArea()
     }
 }
 
 #Preview {
-    ContentView()
+    TabOverlay()
 }
