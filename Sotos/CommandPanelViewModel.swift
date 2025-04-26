@@ -9,22 +9,13 @@ class CommandPanelViewModel: ObservableObject {
 
     private var panelWindow: NSWindow?
     private var hotKey: HotKey?
-    private var hotKey2: HotKey?
 
-    init() {
-        showPanel()
-    }
+    private var clickMonitor: Any?
 
     func setupHotKey() {
-        // Command + Space
-        hotKey = HotKey(key: .space, modifiers: [.command])
-        hotKey?.keyDownHandler = { [weak self] in
-            self?.togglePanel()
-        }
-        
         // Command + K
-        hotKey2 = HotKey(key: .k, modifiers: [.command])
-        hotKey2?.keyDownHandler = { [weak self] in
+        hotKey = HotKey(key: .l, modifiers: [.command])
+        hotKey?.keyDownHandler = { [weak self] in
             self?.togglePanel()
         }
     }
@@ -38,7 +29,8 @@ class CommandPanelViewModel: ObservableObject {
     }
 
     private func showPanel() {
-        let panel = NSPanel(
+        isPanelVisible = true
+        let panel = FocusablePanel(
             contentRect: NSRect(x: 0, y: 0, width: 520, height: 64),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
@@ -54,6 +46,25 @@ class CommandPanelViewModel: ObservableObject {
         panel.title = ""
         panel.isMovable = true
         panel.isMovableByWindowBackground = true
+
+        // Create the SwiftUI view with proper bindings
+        let contentView = CommandPanel(
+            isVisible: Binding(
+                get: { self.isPanelVisible },
+                set: { self.isPanelVisible = $0 }
+            ),
+            query: Binding(
+                get: { self.query },
+                set: { self.query = $0 }
+            )
+        )
+        
+        // Embed the SwiftUI view
+        panel.contentView = NSHostingView(rootView: contentView)
+
+        // Order the panel to front and make it key
+        panel.orderFrontRegardless()
+        panel.makeKeyAndOrderFront(nil)
         
         // Add notification observer for window resigning key
         NotificationCenter.default.addObserver(
@@ -64,17 +75,28 @@ class CommandPanelViewModel: ObservableObject {
             self?.hidePanel()
         }
 
-        // Embed your SwiftUI view
-        panel.contentView = NSHostingView(rootView:
-            CommandPanel(isVisible: .constant(true), query: .constant(""))
-        )
+        // Add global click monitor to hide panel on click off
+        clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
+            guard let self = self, let panelWindow = self.panelWindow else { return }
+            let mouseLocation = NSEvent.mouseLocation
+            let windowFrame = panelWindow.frame
+            if !windowFrame.contains(mouseLocation) {
+                self.hidePanel()
+            }
+        }
 
-        panel.orderFrontRegardless()
         panelWindow = panel
-        isPanelVisible = true
+        
+        // Focus the window
+        NSApp.activate(ignoringOtherApps: true)
+        panel.makeKeyAndOrderFront(nil)
     }
 
     private func hidePanel() {
+        if let clickMonitor = clickMonitor {
+            NSEvent.removeMonitor(clickMonitor)
+            self.clickMonitor = nil
+        }
         panelWindow?.orderOut(nil)
         panelWindow = nil
         isPanelVisible = false
