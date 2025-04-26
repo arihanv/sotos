@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0F6B54622DBD6D880094E56E /* DOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54602DBD6D880094E56E /* DOM.swift */; };
 		0F6B54642DBD74740094E56E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54632DBD74740094E56E /* AppDelegate.swift */; };
+		0F6B54672DBD80B30094E56E /* DOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54662DBD80B30094E56E /* DOM.swift */; };
+		0F6B54692DBD81600094E56E /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6B54682DBD81600094E56E /* HotKey */; };
 		0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489662DBD640900A0A3EB /* SotosApp.swift */; };
 		0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489682DBD640900A0A3EB /* ContentView.swift */; };
 		0FC4896B2DBD640B00A0A3EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */; };
@@ -44,6 +46,7 @@
 /* Begin PBXFileReference section */
 		0F6B54602DBD6D880094E56E /* DOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOM.swift; sourceTree = "<group>"; };
 		0F6B54632DBD74740094E56E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0F6B54662DBD80B30094E56E /* DOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOM.swift; sourceTree = "<group>"; };
 		0FC489632DBD640900A0A3EB /* Sotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC489662DBD640900A0A3EB /* SotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosApp.swift; sourceTree = "<group>"; };
 		0FC489682DBD640900A0A3EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6B54692DBD81600094E56E /* HotKey in Frameworks */,
 				CAD36EFF2DBD69D900E0429F /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +92,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F6B54652DBD80900094E56E /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0F6B54602DBD6D880094E56E /* DOM.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		0FC4895A2DBD640900A0A3EB = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +107,7 @@
 				0FC489772DBD640B00A0A3EB /* SotosTests */,
 				0FC489812DBD640B00A0A3EB /* SotosUITests */,
 				0FC489642DBD640900A0A3EB /* Products */,
+				0F6B54652DBD80900094E56E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,6 +131,7 @@
 				CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */,
 				CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */,
 				CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */,
+				0F6B54662DBD80B30094E56E /* DOM.swift */,
 				0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */,
 				CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */,
 				0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */,
@@ -167,6 +181,9 @@
 			dependencies = (
 			);
 			name = Sotos;
+			packageProductDependencies = (
+				0F6B54682DBD81600094E56E /* HotKey */,
+			);
 			productName = Sotos;
 			productReference = 0FC489632DBD640900A0A3EB /* Sotos.app */;
 			productType = "com.apple.product-type.application";
@@ -288,6 +305,7 @@
 				0F6B54622DBD6D880094E56E /* DOM.swift in Sources */,
 				0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */,
 				CAD36F152DBD7F5900E0429F /* FocusablePanel.swift in Sources */,
+				0F6B54672DBD80B30094E56E /* DOM.swift in Sources */,
 				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
 				CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */,
 				CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */,
@@ -630,6 +648,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0F6B54682DBD81600094E56E /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD36EFD2DBD69D900E0429F /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
 		CAD36EFE2DBD69D900E0429F /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAD36EFD2DBD69D900E0429F /* XCRemoteSwiftPackageReference "HotKey" */;
