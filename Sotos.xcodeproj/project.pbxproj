@@ -140,8 +140,8 @@
 		0FC489812DBD640B00A0A3EB /* SotosUITests */ = {
 			isa = PBXGroup;
 			children = (
-				0FC489822DBD640B00A0A3EB /* SotosUITests.swift */,
 				0FC489842DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift */,
+				0FC489822DBD640B00A0A3EB /* SotosUITests.swift */,
 			);
 			path = SotosUITests;
 			sourceTree = "<group>";

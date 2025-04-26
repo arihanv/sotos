@@ -11,6 +11,7 @@ class CommandPanelViewModel: ObservableObject {
     private var hotKey: HotKey?
 
     private var clickMonitor: Any?
+    private var lastBecameActive: Date? = nil
 
     func setupHotKey() {
         // Command + K
@@ -20,7 +21,26 @@ class CommandPanelViewModel: ObservableObject {
         }
     }
 
+    func updateHotKey(key: String, modifiers: [NSEvent.ModifierFlags]) {
+        // Remove the old hotkey
+        hotKey = nil
+        // Map the string key to Key enum
+        guard let keyEnum = Key(string: key) else { return }
+        hotKey = HotKey(key: keyEnum, modifiers: NSEvent.ModifierFlags(modifiers))
+        hotKey?.keyDownHandler = { [weak self] in
+            self?.togglePanel()
+        }
+    }
+
+    func appDidBecomeActive() {
+        lastBecameActive = Date()
+    }
+
     func togglePanel() {
+        // Prevent showing panel if app just became active (e.g., after Cmd+Tab)
+        if let lastActive = lastBecameActive, Date().timeIntervalSince(lastActive) < 0.5 {
+            return
+        }
         if panelWindow == nil {
             showPanel()
         } else {
@@ -31,7 +51,7 @@ class CommandPanelViewModel: ObservableObject {
     private func showPanel() {
         isPanelVisible = true
         let panel = FocusablePanel(
-            contentRect: NSRect(x: 0, y: 0, width: 520, height: 64),
+            contentRect: NSRect(x: 0, y: 0, width: 700, height: 160),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -56,7 +76,8 @@ class CommandPanelViewModel: ObservableObject {
             query: Binding(
                 get: { self.query },
                 set: { self.query = $0 }
-            )
+            ),
+            viewModel: self
         )
         
         // Embed the SwiftUI view
@@ -66,15 +87,6 @@ class CommandPanelViewModel: ObservableObject {
         panel.orderFrontRegardless()
         panel.makeKeyAndOrderFront(nil)
         
-        // Add notification observer for window resigning key
-        NotificationCenter.default.addObserver(
-            forName: NSWindow.didResignKeyNotification,
-            object: panel,
-            queue: .main
-        ) { [weak self] _ in
-            self?.hidePanel()
-        }
-
         // Add global click monitor to hide panel on click off
         clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
             guard let self = self, let panelWindow = self.panelWindow else { return }
@@ -100,5 +112,9 @@ class CommandPanelViewModel: ObservableObject {
         panelWindow?.orderOut(nil)
         panelWindow = nil
         isPanelVisible = false
+    }
+
+    func openSettings() {
+        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
     }
 }
