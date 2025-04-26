@@ -39,8 +39,8 @@ class CommandPanelViewModel: ObservableObject {
 
     private func showPanel() {
         let panel = NSPanel(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .nonactivatingPanel],
+            contentRect: NSRect(x: 0, y: 0, width: 520, height: 64),
+            styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
         )
@@ -52,8 +52,17 @@ class CommandPanelViewModel: ObservableObject {
         panel.backgroundColor = .clear
         panel.hasShadow = true
         panel.title = ""
-        panel.isMovable = false
-        panel.isMovableByWindowBackground = false
+        panel.isMovable = true
+        panel.isMovableByWindowBackground = true
+        
+        // Add notification observer for window resigning key
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.didResignKeyNotification,
+            object: panel,
+            queue: .main
+        ) { [weak self] _ in
+            self?.hidePanel()
+        }
 
         // Embed your SwiftUI view
         panel.contentView = NSHostingView(rootView:

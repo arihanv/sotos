@@ -32,7 +32,12 @@ struct CommandPanel: View {
                 .cornerRadius(18)
                 .frame(width: 520)
                 .onAppear {
-                    isTextFieldFocused = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        isTextFieldFocused = true
+                    }
+                }
+                .onTapGesture {
+                    // Prevent clicks inside the panel from dismissing it
                 }
             }
             .transition(.opacity)
