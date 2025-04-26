@@ -17,12 +17,17 @@ struct CommandPanel: View {
                         Image(systemName: "gearshape.fill")
                             .foregroundColor(.black.opacity(0.7))
                             .font(.system(size: 20))
-                        TextField("dog image from google chrome and share it with my bos", text: $query)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.system(size: 18, weight: .medium))
-                            .frame(height: 28)
-                            .focused($isTextFieldFocused)
-                            .foregroundColor(.black)
+                        TextField("dog image from google chrome and share it with my bos", text: $query, onCommit: {
+                            if !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                viewModel.runAgent(with: query)
+                            }
+                        })
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.system(size: 18, weight: .medium))
+                        .frame(height: 28)
+                        .focused($isTextFieldFocused)
+                        .foregroundColor(.black)
+                        .disabled(viewModel.isExecuting)
                         Spacer()
                         Image(systemName: "mic.fill")
                             .foregroundColor(.black.opacity(0.7))
