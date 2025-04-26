@@ -14,7 +14,7 @@ struct SotosApp: App {
     var body: some Scene {
         // No WindowGroup, so no default window
         Settings {
-            EmptyView()
+            CommandPanelSettings(viewModel: appDelegate.panelViewModel)
         }
     }
 }
