@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SotosApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }.windowStyle(HiddenTitleBarWindowStyle())
+        // No WindowGroup, so no default window
+        Settings {
+            EmptyView()
+        }
     }
 }

@@ -19,6 +19,7 @@
 		CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */; };
 		CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */; };
 		CAD36F152DBD7F5900E0429F /* FocusablePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */; };
+		CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanelSettings.swift; sourceTree = "<group>"; };
 		CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanelViewModel.swift; sourceTree = "<group>"; };
 		CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusablePanel.swift; sourceTree = "<group>"; };
+		CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */,
 				CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */,
 				0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */,
+				CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */,
 				0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */,
 				0FC4896C2DBD640B00A0A3EB /* Preview Content */,
 			);
@@ -280,6 +283,7 @@
 				CAD36F152DBD7F5900E0429F /* FocusablePanel.swift in Sources */,
 				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
 				CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */,
+				CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */,
 				CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */,
 				CAD36F0D2DBD6E2200E0429F /* CommandPanel.swift in Sources */,
 			);
