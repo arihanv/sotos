@@ -14,6 +14,10 @@
 		0FC489792DBD640B00A0A3EB /* SotosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489782DBD640B00A0A3EB /* SotosTests.swift */; };
 		0FC489832DBD640B00A0A3EB /* SotosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489822DBD640B00A0A3EB /* SotosUITests.swift */; };
 		0FC489852DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489842DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift */; };
+		CAD36EFF2DBD69D900E0429F /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = CAD36EFE2DBD69D900E0429F /* HotKey */; };
+		CAD36F0D2DBD6E2200E0429F /* CommandPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */; };
+		CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */; };
+		CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,9 @@
 		0FC4897E2DBD640B00A0A3EB /* SotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC489822DBD640B00A0A3EB /* SotosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosUITests.swift; sourceTree = "<group>"; };
 		0FC489842DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanel.swift; sourceTree = "<group>"; };
+		CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanelSettings.swift; sourceTree = "<group>"; };
+		CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanelViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAD36EFF2DBD69D900E0429F /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +105,9 @@
 			children = (
 				0FC489662DBD640900A0A3EB /* SotosApp.swift */,
 				0FC489682DBD640900A0A3EB /* ContentView.swift */,
+				CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */,
+				CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */,
+				CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */,
 				0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */,
 				0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */,
 				0FC4896C2DBD640B00A0A3EB /* Preview Content */,
@@ -193,7 +204,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					0FC489622DBD640900A0A3EB = {
 						CreatedOnToolsVersion = 15.4;
@@ -217,6 +228,9 @@
 				Base,
 			);
 			mainGroup = 0FC4895A2DBD640900A0A3EB;
+			packageReferences = (
+				CAD36EFD2DBD69D900E0429F /* XCRemoteSwiftPackageReference "HotKey" */,
+			);
 			productRefGroup = 0FC489642DBD640900A0A3EB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,6 +275,9 @@
 			files = (
 				0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */,
 				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
+				CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */,
+				CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */,
+				CAD36F0D2DBD6E2200E0429F /* CommandPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +348,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -394,6 +412,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -424,6 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
 				DEVELOPMENT_TEAM = P7TZX9D7G8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -451,6 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
 				DEVELOPMENT_TEAM = P7TZX9D7G8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -472,10 +493,10 @@
 		0FC4898C2DBD640B00A0A3EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -491,10 +512,10 @@
 		0FC4898D2DBD640B00A0A3EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -510,9 +531,9 @@
 		0FC4898F2DBD640B00A0A3EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -527,9 +548,9 @@
 		0FC489902DBD640B00A0A3EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -581,6 +602,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CAD36EFD2DBD69D900E0429F /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CAD36EFE2DBD69D900E0429F /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD36EFD2DBD69D900E0429F /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0FC4895B2DBD640900A0A3EB /* Project object */;
 }

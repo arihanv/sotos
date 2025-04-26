@@ -6,16 +6,26 @@
 //
 
 import SwiftUI
+import HotKey
 
 struct ContentView: View {
+    @StateObject private var panelViewModel = CommandPanelViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            CommandPanel(isVisible: $panelViewModel.isPanelVisible, query: $panelViewModel.query)
         }
-        .padding()
+        .onAppear {
+            for window in NSApplication.shared.windows {
+                window.level = .statusBar
+            }
+        }
+        .sheet(isPresented: $panelViewModel.isSettingsVisible) {
+            CommandPanelSettings(viewModel: panelViewModel)
+        }
+        .onAppear {
+            panelViewModel.setupHotKey()
+        }
     }
 }
 
