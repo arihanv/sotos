@@ -12,8 +12,8 @@
 	"argv": [
 		"/opt/homebrew/bin/xcode-build-server"
 	],
-	"workspace": "/Users/arihanvaranasi/Dev/sotos/Sotos.xcodeproj/project.xcworkspace",
-	"build_root": "/Users/arihanvaranasi/Library/Developer/Xcode/DerivedData/Sotos-aeevgsfyaekrdhfwihunbhuadasc",
+	"workspace": "/Users/ethangoodhart/Programming/sotos/Sotos.xcodeproj/project.xcworkspace",
+	"build_root": "/Users/ethangoodhart/Library/Developer/Xcode/DerivedData/Sotos-fzdhmkeburqffabvjlvoptdctbjj",
 	"scheme": "Sotos",
 	"kind": "xcode"
 }

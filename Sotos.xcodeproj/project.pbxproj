@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F6B54622DBD6D880094E56E /* DOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54602DBD6D880094E56E /* DOM.swift */; };
+		0F6B54642DBD74740094E56E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54632DBD74740094E56E /* AppDelegate.swift */; };
 		0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489662DBD640900A0A3EB /* SotosApp.swift */; };
 		0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489682DBD640900A0A3EB /* ContentView.swift */; };
 		0FC4896B2DBD640B00A0A3EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F6B54602DBD6D880094E56E /* DOM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOM.swift; sourceTree = "<group>"; };
+		0F6B54632DBD74740094E56E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0FC489632DBD640900A0A3EB /* Sotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC489662DBD640900A0A3EB /* SotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosApp.swift; sourceTree = "<group>"; };
 		0FC489682DBD640900A0A3EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,9 +99,11 @@
 		0FC489652DBD640900A0A3EB /* Sotos */ = {
 			isa = PBXGroup;
 			children = (
+				0F6B54632DBD74740094E56E /* AppDelegate.swift */,
 				0FC489662DBD640900A0A3EB /* SotosApp.swift */,
 				0FC489682DBD640900A0A3EB /* ContentView.swift */,
 				0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */,
+				0F6B54602DBD6D880094E56E /* DOM.swift */,
 				0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */,
 				0FC4896C2DBD640B00A0A3EB /* Preview Content */,
 			);
@@ -259,6 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6B54642DBD74740094E56E /* AppDelegate.swift in Sources */,
+				0F6B54622DBD6D880094E56E /* DOM.swift in Sources */,
 				0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */,
 				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
 			);
@@ -425,8 +433,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
-				DEVELOPMENT_TEAM = P7TZX9D7G8;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = 83G3TY5SUX;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -452,8 +460,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
-				DEVELOPMENT_TEAM = P7TZX9D7G8;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = 83G3TY5SUX;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
