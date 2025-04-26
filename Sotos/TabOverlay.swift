@@ -17,8 +17,7 @@ struct TabOverlay: View {
             if shouldShow {
                 RoundedRectangle(cornerRadius: 4)
                     .stroke(Color.yellow.opacity(0.8), lineWidth: 2)
-                    .background(RoundedRectangle(cornerRadius: 4).fill(Color.black.opacity(0.85)))
-                    .frame(width: 150, height: 34)
+//                    .background(RoundedRectangle(cornerRadius: 4).fill(Color.black.opacity(0.85)))
                     .overlay(
                         HStack(spacing: 4) {
                             Text("TAB")

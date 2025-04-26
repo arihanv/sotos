@@ -122,32 +122,68 @@ class CommandPanelViewModel: ObservableObject {
 
 class GlobalOverlayManager {
     static let shared = GlobalOverlayManager()
-    private var overlayWindow: NSPanel?
+    private var overlayWindows: [NSPanel] = []
     private var cancellable: AnyCancellable?
+    private var timer: Timer?
+
+    private var dom: [Int: DOMElement] = [:]
 
     func showOverlay() {
-        guard overlayWindow == nil else { return }
-        let panel = NSPanel(
-            contentRect: NSRect(x: 100, y: 10, width: 100, height: 100),
-            styleMask: [.borderless, .nonactivatingPanel],
-            backing: .buffered,
-            defer: false
-        )
-        panel.isReleasedWhenClosed = false
-        panel.level = .statusBar
-        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        panel.isOpaque = false
-        panel.backgroundColor = .clear
-        panel.hasShadow = false
-        panel.ignoresMouseEvents = true
-        panel.title = ""
-        panel.contentView = NSHostingView(rootView: TabOverlay())
-        panel.orderFrontRegardless()
-        overlayWindow = panel
+        guard overlayWindows.isEmpty else { return }
+        
+        // Start a timer that updates the DOM every 1 second
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.dom = getCurrentDom()
+            let dom_str = domToString(some_dom: self.dom)
+            print(dom_str)
+            
+            // Clear existing overlay windows
+            for window in self.overlayWindows {
+                window.orderOut(nil)
+            }
+            self.overlayWindows.removeAll()
+            
+            // Create overlays for the first 30 DOM elements
+            let elementsToShow = Array(self.dom.values.filter { $0.isClickable }.prefix(200))
+            let screenHeight = NSScreen.main?.frame.height ?? 0
+            for element in elementsToShow {
+                let frame = element.frame
+                let padding: CGFloat = 12.0
+                let x = floor(frame.origin.x) - padding
+                let y = floor(screenHeight - frame.origin.y - frame.size.height) - padding
+                let width = ceil(frame.size.width) + 2 * padding
+                let height = ceil(frame.size.height) + 2 * padding
+                let panel = NSPanel(
+                    contentRect: NSRect(x: x, y: y, width: width, height: height),
+                    styleMask: [.borderless, .nonactivatingPanel],
+                    backing: .buffered,
+                    defer: false
+                )
+                panel.isReleasedWhenClosed = false
+                panel.level = .statusBar
+                panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+                panel.isOpaque = false
+                panel.backgroundColor = .clear
+                panel.hasShadow = false
+                panel.ignoresMouseEvents = true
+                panel.title = ""
+                panel.contentView = NSHostingView(rootView: TabOverlay())
+                panel.orderFrontRegardless()
+                self.overlayWindows.append(panel)
+            }
+        }
     }
 
     func hideOverlay() {
-        overlayWindow?.orderOut(nil)
-        overlayWindow = nil
+        // Invalidate the timer when hiding the overlay
+        timer?.invalidate()
+        timer = nil
+        
+        // Hide and clear all overlay windows
+        for window in overlayWindows {
+            window.orderOut(nil)
+        }
+        overlayWindows.removeAll()
     }
 }
