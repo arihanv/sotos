@@ -125,27 +125,33 @@ class GlobalOverlayManager {
     private var overlayWindows: [NSPanel] = []
     private var cancellable: AnyCancellable?
     private var timer: Timer?
-
     private var dom: [Int: DOMElement] = [:]
+    private var tabHotKey: HotKey?
+    private var lastPredictedAction: String?
+
+    init() {
+        // Register Tab hotkey globally
+        tabHotKey = HotKey(key: .tab, modifiers: [])
+        tabHotKey?.keyDownHandler = { [weak self] in
+            guard let self = self, let action = self.lastPredictedAction else { return }
+            print("TAB PRESSED, executing action: \(action)")
+            _ = execute_actions(past_actions: pastUserActions, actions: [action])
+        }
+    }
 
     func showOverlay() {
         guard overlayWindows.isEmpty else { return }
-        
-        // Start a timer that updates the DOM every 1 second
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.dom = getCurrentDom()
             let dom_str = domToString(some_dom: self.dom)
-            print(dom_str)
-            
-            // Clear existing overlay windows
+            let (predicted_dom_element, predicted_action) = predictDomElementWithAction(dom: self.dom, dom_str: dom_str)
+            self.lastPredictedAction = predicted_action
             for window in self.overlayWindows {
                 window.orderOut(nil)
             }
             self.overlayWindows.removeAll()
-            
-            // Create overlays for the first 30 DOM elements
-            let elementsToShow = Array(self.dom.values.filter { $0.isClickable }.prefix(200))
+            let elementsToShow = predicted_dom_element != nil ? [predicted_dom_element!] : []
             let screenHeight = NSScreen.main?.frame.height ?? 0
             for element in elementsToShow {
                 let frame = element.frame
@@ -176,11 +182,8 @@ class GlobalOverlayManager {
     }
 
     func hideOverlay() {
-        // Invalidate the timer when hiding the overlay
         timer?.invalidate()
         timer = nil
-        
-        // Hide and clear all overlay windows
         for window in overlayWindows {
             window.orderOut(nil)
         }
