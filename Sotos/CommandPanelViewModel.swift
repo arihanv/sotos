@@ -141,7 +141,7 @@ class GlobalOverlayManager {
 
     func showOverlay() {
         guard overlayWindows.isEmpty else { return }
-        timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.dom = getCurrentDom()
             let dom_str = domToString(some_dom: self.dom)
