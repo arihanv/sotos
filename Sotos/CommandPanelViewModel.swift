@@ -196,8 +196,10 @@ class CommandPanelViewModel: ObservableObject {
 
     private func showExecutionPanel() {
         guard executionPanelWindow == nil else { return }
+        let panelWidth: CGFloat = 400
+        let panelHeight: CGFloat = 120
         let panel = FocusablePanel(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 120),
+            contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -205,13 +207,20 @@ class CommandPanelViewModel: ObservableObject {
         panel.isReleasedWhenClosed = false
         panel.level = .floating
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        panel.center()
         panel.isOpaque = false
         panel.backgroundColor = .clear
         panel.hasShadow = true
         panel.title = ""
         panel.isMovable = true
         panel.isMovableByWindowBackground = true
+
+        // Position at bottom center of main screen
+        if let screen = NSScreen.main {
+            let screenFrame = screen.visibleFrame
+            let x = screenFrame.midX - panelWidth / 2
+            let y = screenFrame.minY + 32 // 32pt above the bottom edge
+            panel.setFrameOrigin(NSPoint(x: x, y: y))
+        }
 
         let contentView = ExecutionPanel(viewModel: self)
         panel.contentView = NSHostingView(rootView: contentView)

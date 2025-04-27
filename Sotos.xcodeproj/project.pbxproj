@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F6B54622DBD6D880094E56E /* DOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54602DBD6D880094E56E /* DOM.swift */; };
-		0F6B54642DBD74740094E56E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54632DBD74740094E56E /* AppDelegate.swift */; };
 		0F6B54672DBD80B30094E56E /* DOM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6B54662DBD80B30094E56E /* DOM.swift */; };
 		0F6B54692DBD81600094E56E /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6B54682DBD81600094E56E /* HotKey */; };
 		0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489662DBD640900A0A3EB /* SotosApp.swift */; };
@@ -24,6 +22,7 @@
 		CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */; };
 		CAD36F152DBD7F5900E0429F /* FocusablePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */; };
 		CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */; };
+		CAD36F6A2DBDAB5B00E0429F /* ExecutionPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD36F692DBDAB5B00E0429F /* ExecutionPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +62,7 @@
 		CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanelViewModel.swift; sourceTree = "<group>"; };
 		CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusablePanel.swift; sourceTree = "<group>"; };
 		CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CAD36F692DBDAB5B00E0429F /* ExecutionPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +127,7 @@
 				0F6B54632DBD74740094E56E /* AppDelegate.swift */,
 				0FC489662DBD640900A0A3EB /* SotosApp.swift */,
 				0FC489682DBD640900A0A3EB /* ContentView.swift */,
+				CAD36F692DBDAB5B00E0429F /* ExecutionPanel.swift */,
 				CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */,
 				CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */,
 				CAD36F142DBD7F5900E0429F /* FocusablePanel.swift */,
@@ -301,14 +302,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F6B54642DBD74740094E56E /* AppDelegate.swift in Sources */,
-				0F6B54622DBD6D880094E56E /* DOM.swift in Sources */,
 				0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */,
 				CAD36F152DBD7F5900E0429F /* FocusablePanel.swift in Sources */,
 				0F6B54672DBD80B30094E56E /* DOM.swift in Sources */,
 				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
 				CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */,
 				CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */,
+				CAD36F6A2DBDAB5B00E0429F /* ExecutionPanel.swift in Sources */,
 				CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */,
 				CAD36F0D2DBD6E2200E0429F /* CommandPanel.swift in Sources */,
 			);
@@ -478,7 +478,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
-				DEVELOPMENT_TEAM = 83G3TY5SUX;
+				DEVELOPMENT_TEAM = P7TZX9D7G8;
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -506,7 +506,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
-				DEVELOPMENT_TEAM = 83G3TY5SUX;
+				DEVELOPMENT_TEAM = P7TZX9D7G8;
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

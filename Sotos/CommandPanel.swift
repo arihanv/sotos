@@ -41,29 +41,29 @@ struct CommandPanel: View {
                     Divider().padding(.horizontal, 8)
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 10) {
-                            Image(systemName: "photo.on.rectangle")
+                            Image(systemName: "note.text")
                                 .foregroundColor(.gray)
-                            Text("Select a cute dog image")
+                            Text("make a new apple note with title hello and body world")
                                 .foregroundColor(.gray)
                                 .font(.system(size: 16))
                         }
                         .padding(.vertical, 8)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            query = "Select a cute dog image"
+                            query = "make a new apple note with title hello and body world"
                             isTextFieldFocused = true
                         }
                         HStack(spacing: 10) {
-                            Image(systemName: "square.and.arrow.up")
+                            Image(systemName: "safari")
                                 .foregroundColor(.gray)
-                            Text("Share the image via iMessage")
+                            Text("open safari and search for anthropic")
                                 .foregroundColor(.gray)
                                 .font(.system(size: 16))
                         }
                         .padding(.vertical, 8)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            query = "Share the image via iMessage"
+                            query = "open safari and search for anthropic"
                             isTextFieldFocused = true
                         }
                     }
