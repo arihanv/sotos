@@ -145,16 +145,16 @@ func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [Strin
                     // Focus the element first
                     AXUIElementSetAttributeValue(element.uielem, kAXFocusedAttribute as CFString, kCFBooleanTrue)
                     
-                    // Type the text
-                    for char in text {
-                        let keyCode = CGKeyCode(char.unicodeScalars.first!.value)
-                        let keyDown = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true)
-                        let keyUp = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false)
-                        keyDown?.post(tap: .cghidEventTap)
-                        keyUp?.post(tap: .cghidEventTap)
-                        Thread.sleep(forTimeInterval: 0.01) // Small delay between keystrokes
+                    // Set the text value directly using AXUIElement
+                    let result = AXUIElementSetAttributeValue(element.uielem, kAXValueAttribute as CFString, text as CFTypeRef)
+                    if result != .success {
+                        // Fallback to alternative attribute if the standard one fails
+                        let altResult = AXUIElementSetAttributeValue(element.uielem, kAXSelectedTextAttribute as CFString, text as CFTypeRef)
+                        if altResult != .success {
+                            throw NSError(domain: "Executor", code: 5, userInfo: [NSLocalizedDescriptionKey: "Failed to set text value for element: \(elementId)"])
+                        }
                     }
-                    
+
                     appendPastUserAction("✅ Typed text: \(text) into element: \(elementId)")
                 } catch {
                     appendPastUserAction("❌ [FAILED] Typing text: \(text) into element: \(elementId) - \(error.localizedDescription)")
@@ -251,6 +251,7 @@ func predictDomElementWithAction(dom: [Int: DOMElement], dom_str: String) -> (DO
         defer { semaphore.signal() }
         guard let data = data else { return }
         guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
+        print("!predictDomElementWithAction: \(json)")
         if let outputAction = json["output_action"] as? String {
             predictedAction = outputAction
             if outputAction.contains("click_element") {
