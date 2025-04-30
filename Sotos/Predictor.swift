@@ -1,101 +1,74 @@
 // Predictor.swift
 import Foundation
 import AppKit
+// TODO: Import necessary modules for DOMElement, AXUIElement related constants and functions (e.g., Accessibility)
+// TODO: Define or import DOMElement struct/class
+// TODO: Define or import getFrontApp(), openApplication(), clickElement()
+
+// --- Groq API Configuration ---
+let groqApiKey = "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" // Replace with your actual key if needed
+let groqApiUrl = "https://api.groq.com/openai/v1/chat/completions"
+let groqModel = "llama-3.1-8b-instant" // Or another suitable model
+
+let systemPrompt = """
+You are Zeus, an advanced macOS automation assistant with predictive intelligence. Your core function is to analyze the current UI state and accurately predict the user's most likely next action.
+
+## CAPABILITIES & RESPONSIBILITIES:
+- You have deep understanding of macOS UI patterns and user behavior
+- You can identify the most relevant clickable elements based on context
+- You excel at predicting natural interaction flows in applications
+- You prioritize high-confidence predictions that save users time
+
+## CONTEXT AWARENESS:
+- Consider the application currently in focus
+- Analyze the hierarchy and relationships between UI elements
+- Recognize common UI patterns (forms, dialogs, navigation)
+- Identify primary action buttons vs secondary options
+
+## INPUT FORMAT: 
+You receive a structured DOM representation of the current screen:
+[ID_NUMBER]<ELEM_TYPE>content inside</ELEM_TYPE>
+
+Example: 
+[14]<AXButton>Save</AXButton>
+[27]<AXTextField>Username</AXTextField>
+[38]<AXCheckBox>Remember me</AXCheckBox>
+
+## PREDICTION STRATEGY:
+1. Identify the most likely user intent based on visible elements
+2. Prioritize primary actions (Save, Continue, Submit) when forms are complete
+3. Suggest logical next steps in multi-step workflows
+4. Consider recency and frequency of similar patterns
+
+## OUTPUT REQUIREMENTS:
+- Return EXACTLY ONE prediction in valid JSON format
+- Use only actions from the provided action list
+- Include the element ID for actions that require it
+- Format must be: {"action_name": {"parameter": value}}
+- Example: {"click_element": {"id": 42}}
+- Use "none()" only when genuinely uncertain
+
+Your prediction should be the single most likely next user action with high confidence.
+"""
+
+let availableActions = [ // Define the actions the model can choose from
+    "click_element(id) - Click on element",
+    "type_in_element(id, text) - Type text into element",
+//    "open_app(bundle_id) - Open app",
+//    "hotkey(keys) - Execute keyboard shortcuts as a list of keys, e.g. ['cmd', 's'] or ['enter']",
+//    "wait(seconds) - Wait for a number of seconds (less is better)",
+//    "finish() - Only call in final block after executing all actions, when the entire task has been successfully completed"
+    "none() - Do nothing if uncertain" // Added none action
+]
+// --- End Groq API Configuration ---
+
 
 var maxPastUserActions = 10
 var pastUserActions = [String]()
-var thedom: [Int: DOMElement] = [:]
+var thedom: [Int: DOMElement] = [:] // Global DOM, consider managing state differently if needed
 
-func predictDomElement(dom: [Int: DOMElement], dom_str: String) -> DOMElement? {
-    thedom = dom
+// Removed predictDomElement function as predictDomElementWithAction provides the necessary info
 
-    let url = URL(string: "https://c723-171-66-11-52.ngrok-free.app/run_program")!
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-    // Convert arrays to JSON strings to fit in the dictionary
-    let pastActionsJson = try! JSONSerialization.data(withJSONObject: pastUserActions)
-    let pastActionsString = String(data: pastActionsJson, encoding: .utf8) ?? "[]"
-    
-    let frontAppInfo = getFrontApp()
-    let frontAppJson = try! JSONSerialization.data(withJSONObject: frontAppInfo)
-    let frontAppString = String(data: frontAppJson, encoding: .utf8) ?? "[]"
-    
-    let actionsArray = [
-        "open_app(bundle_id) - Open app",
-        "click_element(id) - Click on element",
-        "type_in_element(id, text) - Type text into element"
-    ]
-    let actionsJson = try! JSONSerialization.data(withJSONObject: actionsArray)
-    let actionsString = String(data: actionsJson, encoding: .utf8) ?? "[]"
-
-    let body: [String: String] = [
-        "past_user_actions": pastActionsString,
-        "open_application": frontAppString,
-        "current_state": dom_str,
-        "actions": actionsString
-    ]
-    
-    request.httpBody = try! JSONSerialization.data(withJSONObject: body)
-
-    var predictedElement: DOMElement? = nil
-    let semaphore = DispatchSemaphore(value: 0)
-
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-        defer { semaphore.signal() }
-        guard let data = data else {
-            print("Output action: No data received")
-            return
-        }
-        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            print("Output action: Could not parse JSON")
-            return
-        }
-        print("Output action: \(json)")
-        // Handle output_action as either String or Dictionary
-        if let outputAction = json["output_action"] as? String {
-            print("Output action: \(outputAction)")
-            if outputAction.contains("click_element") {
-                if let elementIdStr = extractValue(from: outputAction, key: "id"), let elementId = Int(elementIdStr) {
-                    if let element = dom.values.first(where: { $0.clickableId == elementId }) {
-                        predictedElement = element
-                        return
-                    }
-                }
-            }
-        } else if let outputActionDict = json["output_action"] as? [String: Any] {
-            // e.g., {"type_in_element": {"id": 34, "text": "..."}}
-            if let (action, params) = outputActionDict.first {
-                var actionString = action
-                if let paramDict = params as? [String: Any] {
-                    let paramString = paramDict.map { "\($0.key)=\($0.value)" }.joined(separator: ", ")
-                    actionString += "(" + paramString + ")"
-                }
-                print("Output action (dict): \(actionString)")
-                if action == "click_element" || action == "type_in_element" {
-                    if let idValue = (params as? [String: Any])?["id"], let elementId = (idValue as? Int) ?? Int("\(idValue)") {
-                        if let element = dom.values.first(where: { $0.clickableId == elementId }) {
-                            predictedElement = element
-                            return
-                        }
-                    }
-                }
-            }
-        } else {
-            print("Output action: No output_action")
-            return
-        }
-    }
-    task.resume()
-    semaphore.wait()
-    
-    if let element = predictedElement {
-        return element
-    } else {
-        return nil
-    }
-}
 
 // Helper to append and trim pastUserActions
 private func appendPastUserAction(_ action: String) {
@@ -105,17 +78,17 @@ private func appendPastUserAction(_ action: String) {
     }
 }
 
-func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [String]) {
+func execute_actions(past_actions: [String], actions_to_execute: [String]) -> (Bool, [String]) {
     var task_completed = false
     
-    print("Executing actions: \(actions)")
+    print("Executing actions: \(actions_to_execute)")
 
-    for action in actions {
+    for action in actions_to_execute {
         if action.contains("open_app") {
             // Parse bundle_id from action string
             if let bundleId = extractValue(from: action, key: "bundle_id") {
                 do {
-                    try openApplication(bundleId: bundleId)
+                    try openApplication(bundleId: bundleId) // Assumes openApplication exists
                     appendPastUserAction("✅ Opened app: \(bundleId)")
                 } catch {
                     appendPastUserAction("❌ [FAILED] Opened app: \(bundleId)")
@@ -125,7 +98,7 @@ func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [Strin
             if let elementIdStr = extractValue(from: action, key: "id"), let elementId = Int(elementIdStr) {
                 do {
                     print("!clicking element \(elementId)")
-                    try clickElement(dom: thedom, clickableId: elementId)
+                    try clickElement(dom: thedom, clickableId: elementId) // Assumes clickElement exists
                     appendPastUserAction("✅ Clicked element: \(elementId)")
                 } catch {
                     appendPastUserAction("❌ [FAILED] Clicked element: \(elementId)")
@@ -147,10 +120,10 @@ func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [Strin
                     
                     // Set the text value directly using AXUIElement
                     let result = AXUIElementSetAttributeValue(element.uielem, kAXValueAttribute as CFString, text as CFTypeRef)
-                    if result != .success {
+                    if result != .success { // Qualified with AXError
                         // Fallback to alternative attribute if the standard one fails
                         let altResult = AXUIElementSetAttributeValue(element.uielem, kAXSelectedTextAttribute as CFString, text as CFTypeRef)
-                        if altResult != .success {
+                        if altResult != .success { // Qualified with AXError
                             throw NSError(domain: "Executor", code: 5, userInfo: [NSLocalizedDescriptionKey: "Failed to set text value for element: \(elementId)"])
                         }
                     }
@@ -162,8 +135,9 @@ func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [Strin
             }
         } else if action.contains("hotkey") {
             if let keys = extractValue(from: action, key: "keys") {
-                // Implement hotkey functionality
-                appendPastUserAction("✅ Pressed keys: \(keys)")
+                // TODO: Implement actual hotkey execution logic
+                print("Hotkey action requested (not implemented): \(keys)")
+                appendPastUserAction("⚠️ Hotkey (not implemented): \(keys)")
             }
         } else if action.contains("wait") {
             if let secondsStr = extractValue(from: action, key: "seconds"), let seconds = Double(secondsStr) {
@@ -173,174 +147,250 @@ func execute_actions(past_actions: [String], actions: [String]) -> (Bool, [Strin
         } else if action.contains("finish") {
             task_completed = true
             appendPastUserAction("Task completed")
+        } else if action.contains("none") { // Handle none action
+             appendPastUserAction("🤷 No action taken (model uncertain)")
         }
     }
     
     return (task_completed, pastUserActions)
 }
 
-// Helper function to extract values from action strings
+// Helper function to extract values from action strings like "action(key=value, key2='value2')"
+// Handles simple cases, might need refinement for complex nested structures or escaped chars.
 private func extractValue(from action: String, key: String) -> String? {
-    // Handle both formats:
-    // 1. key="value" or key='value'
-    // 2. key=value
-    // 3. key(value) format from dictionary conversion
-    
-    // Try quoted format first: key="value" or key='value'
+    // Try key="value" or key='value'
     let quotedPattern = "\(key)\\s*=\\s*[\"']([^\"']*)[\"']"
-    if let match = try? NSRegularExpression(pattern: quotedPattern, options: []).firstMatch(
-        in: action, options: [], range: NSRange(location: 0, length: action.count)),
-       let range = Range(match.range(at: 1), in: action) {
-        return String(action[range])
+    if let range = action.range(of: quotedPattern, options: .regularExpression) {
+        let result = action[range]
+        // Extract the value part between the quotes
+        if let firstQuoteIndex = result.firstIndex(of: "\"") ?? result.firstIndex(of: "'"),
+           let lastQuoteIndex = result.lastIndex(of: "\"") ?? result.lastIndex(of: "'") {
+           let startIndex = result.index(after: firstQuoteIndex)
+           if startIndex < lastQuoteIndex {
+               return String(result[startIndex..<lastQuoteIndex])
+           }
+        }
     }
-    
-    // Try unquoted format: key=value
+
+    // Try key=value (no quotes, stops at comma, space, or parenthesis)
     let unquotedPattern = "\(key)\\s*=\\s*([^,\\s\\)]+)"
-    if let match = try? NSRegularExpression(pattern: unquotedPattern, options: []).firstMatch(
-        in: action, options: [], range: NSRange(location: 0, length: action.count)),
-       let range = Range(match.range(at: 1), in: action) {
-        return String(action[range])
+     if let range = action.range(of: unquotedPattern, options: .regularExpression) {
+         let result = String(action[range])
+         // Extract the value part after '='
+         if let eqIndex = result.firstIndex(of: "=") {
+             let startIndex = result.index(after: eqIndex)
+             // Trim leading/trailing whitespace from the potential value
+             let value = String(result[startIndex...]).trimmingCharacters(in: .whitespaces)
+             // Ensure we didn't just match the key itself if it was the last thing
+             if !value.isEmpty {
+                 return value
+             }
+         }
+     }
+
+    // Try key: value (common in JSON-like strings from LLMs)
+    // Handles strings like '{"id": 42, "text": "hello"}'
+     let jsonKeyPattern = "[\"']?\(key)[\"']?\\s*:\\s*([\"']?)([^\"',\\}\\]]+)\\1"
+     if let range = action.range(of: jsonKeyPattern, options: [.regularExpression, .caseInsensitive]) {
+         // This is complex, let's try a simpler regex to just get the value part directly
+         // This looks for the key (possibly quoted) followed by : and then captures the value (quoted or unquoted)
+         let simplerPattern = "[\"']?\(key)[\"']?\\s*:\\s*(?:\"([^\"]*)\"|'([^']*)'|([^,\\s\\}\\]]+))"
+         if let match = try? NSRegularExpression(pattern: simplerPattern).firstMatch(in: action, range: NSRange(action.startIndex..., in: action)) {
+             // Check capture groups: 1 for double-quoted, 2 for single-quoted, 3 for unquoted
+             if let r = Range(match.range(at: 1), in: action) { return String(action[r]) }
+             if let r = Range(match.range(at: 2), in: action) { return String(action[r]) }
+             if let r = Range(match.range(at: 3), in: action) { return String(action[r]) }
+         }
+     }
+
+
+    // Try parentheses format: key(value) - Less likely with JSON output but maybe useful
+    let parenthesesPattern = "\(key)\\s*\\(\\s*([^,\\)]+)\\s*\\)"
+    if let range = action.range(of: parenthesesPattern, options: .regularExpression) {
+        let result = action[range]
+        if let openParenIndex = result.firstIndex(of: "("), let closeParenIndex = result.lastIndex(of: ")") {
+            let startIndex = result.index(after: openParenIndex)
+            if startIndex < closeParenIndex {
+                return String(result[startIndex..<closeParenIndex])
+            }
+        }
     }
-    
-    // Try parentheses format: key(value)
-    let parenthesesPattern = "\(key)\\s*\\(\\s*([^,\\)]+)"
-    if let match = try? NSRegularExpression(pattern: parenthesesPattern, options: []).firstMatch(
-        in: action, options: [], range: NSRange(location: 0, length: action.count)),
-       let range = Range(match.range(at: 1), in: action) {
-        return String(action[range])
-    }
-    
+
+    print("⚠️ Could not extract key '\(key)' from action string: \(action)")
     return nil
 }
 
-// Returns (predicted DOMElement, predicted action string)
-func predictDomElementWithAction(dom: [Int: DOMElement], dom_str: String) -> (DOMElement?, String?) {
-    thedom = dom
 
-    let url = URL(string: "https://c723-171-66-11-52.ngrok-free.app/run_program")!
+// Returns (predicted DOMElement, predicted action string) by calling Groq API
+func predictDomElementWithAction(dom: [Int: DOMElement], dom_str: String) -> (DOMElement?, String?) {
+    thedom = dom // Update global DOM reference
+
+    guard let url = URL(string: groqApiUrl) else {
+        print("Error: Invalid Groq API URL")
+        return (nil, nil)
+    }
+
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("Bearer \(groqApiKey)", forHTTPHeaderField: "Authorization")
 
-    let pastActionsJson = try! JSONSerialization.data(withJSONObject: pastUserActions)
-    let pastActionsString = String(data: pastActionsJson, encoding: .utf8) ?? "[]"
-    let frontAppInfo = getFrontApp()
-    let frontAppJson = try! JSONSerialization.data(withJSONObject: frontAppInfo)
-    let frontAppString = String(data: frontAppJson, encoding: .utf8) ?? "[]"
-    let actionsArray = [
-        "open_app(bundle_id) - Open app",
-        "click_element(id) - Click on element",
-        "type_in_element(id, text) - Type text into element"
-    ]
-    let actionsJson = try! JSONSerialization.data(withJSONObject: actionsArray)
-    let actionsString = String(data: actionsJson, encoding: .utf8) ?? "[]"
+    let pastActionsString = pastUserActions.joined(separator: "\n")
+    let frontAppInfo = getFrontApp() // Assumes getFrontApp returns a dictionary or similar
+    // Attempt to serialize frontAppInfo, default to a simple string if fails
+    let frontAppString: String
+    if let jsonData = try? JSONSerialization.data(withJSONObject: frontAppInfo, options: []),
+       let jsonString = String(data: jsonData, encoding: .utf8) {
+        frontAppString = jsonString
+    } else {
+        frontAppString = "\(frontAppInfo)" // Fallback representation
+    }
+    
+    let actionsString = availableActions.joined(separator: "\n")
 
-    let body: [String: String] = [
-        "past_user_actions": pastActionsString,
-        "open_application": frontAppString,
-        "current_state": dom_str,
-        "actions": actionsString
+
+    // Construct the user prompt message
+    let userMessageContent = """
+    Past User Actions:
+    \(pastActionsString.isEmpty ? "None" : pastActionsString)
+
+    Open Application:
+    \(frontAppString)
+
+    Current State (DOM):
+    ```
+    \(dom_str)
+    ```
+
+    Available Actions:
+    \(actionsString)
+
+    Based on the current state and past actions, what is the single next action to take? Respond ONLY with the JSON for the action, ensuring the 'id' exists in the provided Current State (DOM). If you are uncertain about the next step, use the `none()` action.
+    """
+
+    let requestBody: [String: Any] = [
+        "model": groqModel,
+        "messages": [
+            ["role": "system", "content": systemPrompt],
+            ["role": "user", "content": userMessageContent]
+        ],
+        "max_tokens": 150, // Adjust as needed, should be enough for one action JSON
+        "temperature": 0 // For deterministic output
     ]
-    request.httpBody = try! JSONSerialization.data(withJSONObject: body)
+
+    guard let httpBody = try? JSONSerialization.data(withJSONObject: requestBody) else {
+        print("Error: Could not serialize request body")
+        return (nil, nil)
+    }
+    request.httpBody = httpBody
 
     var predictedElement: DOMElement? = nil
-    var predictedAction: String? = nil
+    var predictedActionString: String? = nil
     let semaphore = DispatchSemaphore(value: 0)
 
+    // --- Groq API Call ---
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         defer { semaphore.signal() }
-        guard let data = data else { return }
-        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
-        print("!predictDomElementWithAction: \(json)")
-        if let outputAction = json["output_action"] as? String {
-            predictedAction = outputAction
-            if outputAction.contains("click_element") {
-                if let elementIdStr = extractValue(from: outputAction, key: "id"), let elementId = Int(elementIdStr) {
-                    if let element = dom.values.first(where: { $0.clickableId == elementId }) {
-                        predictedElement = element
-                        return
+
+        if let error = error {
+            print("Error calling Groq API: \(error.localizedDescription)")
+            return
+        }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Error: No HTTP response received")
+            return
+        }
+        guard (200...299).contains(httpResponse.statusCode) else {
+            print("Error: Groq API returned status code \(httpResponse.statusCode)")
+            if let data = data, let errorBody = String(data: data, encoding: .utf8) {
+                print("Error body: \(errorBody)")
+            }
+            return
+        }
+        guard let data = data else {
+            print("Error: No data received from Groq API")
+            return
+        }
+
+        // Parse the Groq JSON response
+        do {
+            if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let choices = jsonResponse["choices"] as? [[String: Any]],
+               let firstChoice = choices.first,
+               let message = firstChoice["message"] as? [String: Any],
+               let content = message["content"] as? String {
+                
+                print("Groq Response Content: \(content)")
+                predictedActionString = content.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                // Now, parse the action *within* the content string
+                // Assuming content *is* the JSON string like {"click_element": {"id": 42}}
+                // We need to determine the action type and find the element ID if applicable
+                
+                // Use extractValue to get potential action keys and IDs
+                var elementId: Int? = nil
+                var actionType: String?
+                
+                if predictedActionString?.contains("click_element") == true {
+                    actionType = "click_element"
+                    if let idStr = extractValue(from: predictedActionString!, key: "id"), let id = Int(idStr) {
+                        elementId = id
                     }
+                } else if predictedActionString?.contains("type_in_element") == true {
+                    actionType = "type_in_element"
+                     if let idStr = extractValue(from: predictedActionString!, key: "id"), let id = Int(idStr) {
+                        elementId = id
+                    }
+                } else {
+                     // Handle other actions like open_app, hotkey, wait, finish if needed
+                     // For now, only element-related actions set predictedElement
+                     actionType = predictedActionString // Or parse more specifically
+                }
+
+                // Find the DOM element if an ID was extracted
+                if let id = elementId {
+                    // --- Add logging for thedom keys ---
+                    print("Looking for ID \(id) in thedom keys: \(thedom.keys.sorted())")
+                    // --- End logging ---
+                    predictedElement = dom.values.first { $0.clickableId == id }
+                    if predictedElement == nil {
+                         print("⚠️ Warning: Groq predicted action for element ID \(id), but element not found in current DOM.")
+                    }
+                } else if predictedActionString?.contains("none") == true {
+                    // Handle none action explicitly
+                    actionType = "none"
+                    elementId = nil // No element associated with none
+                    predictedElement = nil
+                }
+
+                // Find the DOM element if an ID was extracted and action is not none
+                 if let id = elementId, actionType != "none" {
+                    // --- Add logging for thedom keys ---
+                    print("Looking for ID \(id) in thedom keys: \(thedom.keys.sorted())")
+                    // --- End logging ---
+                    predictedElement = dom.values.first { $0.clickableId == id }
+                    if predictedElement == nil {
+                         print("⚠️ Warning: Groq predicted action for element ID \(id), but element not found in current DOM.")
+                    }
+                }
+                
+            } else {
+                print("Error: Could not parse Groq JSON response structure")
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("Raw Response: \(responseString)")
                 }
             }
-        } else if let outputActionDict = json["output_action"] as? [String: Any] {
-            if let (action, params) = outputActionDict.first {
-                var actionString = action
-                if let paramDict = params as? [String: Any] {
-                    let paramString = paramDict.map { "\($0.key)=\($0.value)" }.joined(separator: ", ")
-                    actionString += "(" + paramString + ")"
-                }
-                predictedAction = actionString
-                if action == "click_element" || action == "type_in_element" {
-                    if let idValue = (params as? [String: Any])?["id"], let elementId = (idValue as? Int) ?? Int("\(idValue)") {
-                        if let element = dom.values.first(where: { $0.clickableId == elementId }) {
-                            predictedElement = element
-                            return
-                        }
-                    }
-                }
+        } catch {
+            print("Error parsing Groq JSON response: \(error)")
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Raw Response (on parse error): \(responseString)")
             }
         }
     }
     task.resume()
-    semaphore.wait()
-    return (predictedElement, predictedAction)
+    // --- End Groq API Call ---
+
+    _ = semaphore.wait(timeout: .now() + 30) // Wait up to 30 seconds for the API call
+
+    return (predictedElement, predictedActionString)
 }
-
-// func predictDomElement(dom: [Int: DOMElement], dom_str: String) -> DOMElement {
-//     let clickableElements = dom.values.filter { $0.isClickable } 
-//     if let randomElement = clickableElements.randomElement() {
-//         return randomElement
-//     }
-//     return dom.values.randomElement() ?? dom[0]!
-// }
-// func predictDomElement(dom: [Int: DOMElement], dom_str: String) -> DOMElement {
-//     let api_key = "AIzaSyBuJ6B4R905oXUVnj1oaQ_Nsb5DzcmaZUs"
-//     let url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
-    
-//     let system_prompt = "You are a helpful assistant that can predict the next action to click on.
-    
-//     2. click_element(id) - Click on element
-// 3. type_in_element(id, text) - Type text into element
-//     "
-    
-//     request_body = {
-//         "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-//         "generationConfig": {"temperature": 1, "topK": 40, "topP": 0.95, "maxOutputTokens": 4192},
-//         "systemInstruction": {
-//             "parts": [
-//                 {"text": system_prompt}
-//             ]
-//         }
-//     }
-    
-//     response = requests.post(url, json=request_body)
-//     data = response.json()
-//     candidates = data.get("candidates", [])
-//     text = candidates[0]["content"]["parts"][0]["text"] if candidates else ""
-    
-//     # Clean response
-//     if "```json" in text:
-//         text = text.split("```json", 1)[1]
-//     text = text.replace("```", "").strip()
-//     if "{" in text and "}" in text:
-//         start_idx = text.find("{")
-//         end_idx = text.rfind("}") + 1
-//         text = text[start_idx:end_idx].strip()
-
-//     try:
-//         response_json = json.loads(text, strict=False) # allows \t and other chars which could cause issues
-//         actions = response_json.get("actions", [])
-//         current_state = response_json.get("current_state", {
-//             "evaluation_previous_goal": "Unknown",
-//             "memory": "No memory available",
-//             "next_goal": "No goal specified"
-//         })
-//     except Exception as e:
-//         print(f"Error parsing JSON: {e}, text: {text}")
-//         actions = []
-//         current_state = {
-//             "evaluation_previous_goal": "Unknown",
-//             "memory": "No memory available",
-//             "next_goal": "No goal specified"
-//         }
-// }

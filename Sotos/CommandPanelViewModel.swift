@@ -135,13 +135,13 @@ class GlobalOverlayManager {
         tabHotKey?.keyDownHandler = { [weak self] in
             guard let self = self, let action = self.lastPredictedAction else { return }
             print("TAB PRESSED, executing action: \(action)")
-            _ = execute_actions(past_actions: pastUserActions, actions: [action])
+            _ = execute_actions(past_actions: pastUserActions, actions_to_execute: [action])
         }
     }
 
     func showOverlay() {
         guard overlayWindows.isEmpty else { return }
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.dom = getCurrentDom()
             let dom_str = domToString(some_dom: self.dom)

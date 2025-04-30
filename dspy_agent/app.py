@@ -11,6 +11,7 @@ groq = dspy.LM(model='groq/llama-3.1-8b-instant', api_key=os.getenv('GROQ_API_KE
 dspy.configure(lm=groq)
 
 loaded_dspy_program = dspy.load("./dspy_program_groq/")
+print(loaded_dspy_program.program)
 
 class RequestData(BaseModel):
     past_user_actions: str

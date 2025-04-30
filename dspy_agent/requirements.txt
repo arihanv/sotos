@@ -1,0 +1,5 @@
+dspy>=2.3.6
+fastapi
+python-dotenv
+uvicorn
+pydantic 
