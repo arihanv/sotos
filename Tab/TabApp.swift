@@ -1,6 +1,6 @@
 //
-//  SotosApp.swift
-//  Sotos
+//  TabApp.swift
+//  Tab
 //
 //  Created by Ethan Goodhart on 4/26/25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SotosApp: App {
+struct TabApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {

@@ -12,7 +12,7 @@
 		0F919F302DBD956000D39102 /* TabOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F919F2F2DBD956000D39102 /* TabOverlay.swift */; };
 		0F919F322DBDA5BA00D39102 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F919F312DBDA5BA00D39102 /* Predictor.swift */; };
 		0F919F342DBDAD4800D39102 /* Executor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F919F332DBDAD4800D39102 /* Executor.swift */; };
-		0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489662DBD640900A0A3EB /* SotosApp.swift */; };
+		0FC489672DBD640900A0A3EB /* TabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489662DBD640900A0A3EB /* TabApp.swift */; };
 		0FC489692DBD640900A0A3EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC489682DBD640900A0A3EB /* ContentView.swift */; };
 		0FC4896B2DBD640B00A0A3EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */; };
 		0FC4896E2DBD640B00A0A3EB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC4896D2DBD640B00A0A3EB /* Preview Assets.xcassets */; };
@@ -50,15 +50,15 @@
 		0F919F2F2DBD956000D39102 /* TabOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabOverlay.swift; sourceTree = "<group>"; };
 		0F919F312DBDA5BA00D39102 /* Predictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
 		0F919F332DBDAD4800D39102 /* Executor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Executor.swift; sourceTree = "<group>"; };
-		0FC489632DBD640900A0A3EB /* Sotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FC489662DBD640900A0A3EB /* SotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosApp.swift; sourceTree = "<group>"; };
+		0FC489632DBD640900A0A3EB /* Tab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FC489662DBD640900A0A3EB /* TabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabApp.swift; sourceTree = "<group>"; };
 		0FC489682DBD640900A0A3EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FC4896D2DBD640B00A0A3EB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sotos.entitlements; sourceTree = "<group>"; };
-		0FC489742DBD640B00A0A3EB /* SotosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SotosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FC4896F2DBD640B00A0A3EB /* Tab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tab.entitlements; sourceTree = "<group>"; };
+		0FC489742DBD640B00A0A3EB /* TabTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC489782DBD640B00A0A3EB /* SotosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosTests.swift; sourceTree = "<group>"; };
-		0FC4897E2DBD640B00A0A3EB /* SotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FC4897E2DBD640B00A0A3EB /* TabUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC489822DBD640B00A0A3EB /* SotosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosUITests.swift; sourceTree = "<group>"; };
 		0FC489842DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CAD36F0C2DBD6E2200E0429F /* CommandPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPanel.swift; sourceTree = "<group>"; };
@@ -105,9 +105,9 @@
 		0FC4895A2DBD640900A0A3EB = {
 			isa = PBXGroup;
 			children = (
-				0FC489652DBD640900A0A3EB /* Sotos */,
-				0FC489772DBD640B00A0A3EB /* SotosTests */,
-				0FC489812DBD640B00A0A3EB /* SotosUITests */,
+				0FC489652DBD640900A0A3EB /* Tab */,
+				0FC489772DBD640B00A0A3EB /* TabTests */,
+				0FC489812DBD640B00A0A3EB /* TabUITests */,
 				0FC489642DBD640900A0A3EB /* Products */,
 				0F6B54652DBD80900094E56E /* Recovered References */,
 			);
@@ -116,18 +116,18 @@
 		0FC489642DBD640900A0A3EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0FC489632DBD640900A0A3EB /* Sotos.app */,
-				0FC489742DBD640B00A0A3EB /* SotosTests.xctest */,
-				0FC4897E2DBD640B00A0A3EB /* SotosUITests.xctest */,
+				0FC489632DBD640900A0A3EB /* Tab.app */,
+				0FC489742DBD640B00A0A3EB /* TabTests.xctest */,
+				0FC4897E2DBD640B00A0A3EB /* TabUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0FC489652DBD640900A0A3EB /* Sotos */ = {
+		0FC489652DBD640900A0A3EB /* Tab */ = {
 			isa = PBXGroup;
 			children = (
 				0F6B54632DBD74740094E56E /* AppDelegate.swift */,
-				0FC489662DBD640900A0A3EB /* SotosApp.swift */,
+				0FC489662DBD640900A0A3EB /* TabApp.swift */,
 				0FC489682DBD640900A0A3EB /* ContentView.swift */,
 				CAD36F0E2DBD6E3500E0429F /* CommandPanelSettings.swift */,
 				CAD36F0F2DBD6E3500E0429F /* CommandPanelViewModel.swift */,
@@ -139,10 +139,10 @@
 				0F919F2F2DBD956000D39102 /* TabOverlay.swift */,
 				0FC4896A2DBD640B00A0A3EB /* Assets.xcassets */,
 				CAD36F162DBD7FFE00E0429F /* AppDelegate.swift */,
-				0FC4896F2DBD640B00A0A3EB /* Sotos.entitlements */,
+				0FC4896F2DBD640B00A0A3EB /* Tab.entitlements */,
 				0FC4896C2DBD640B00A0A3EB /* Preview Content */,
 			);
-			path = Sotos;
+			path = Tab;
 			sourceTree = "<group>";
 		};
 		0FC4896C2DBD640B00A0A3EB /* Preview Content */ = {
@@ -153,29 +153,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		0FC489772DBD640B00A0A3EB /* SotosTests */ = {
+		0FC489772DBD640B00A0A3EB /* TabTests */ = {
 			isa = PBXGroup;
 			children = (
 				0FC489782DBD640B00A0A3EB /* SotosTests.swift */,
 			);
-			path = SotosTests;
+			path = TabTests;
 			sourceTree = "<group>";
 		};
-		0FC489812DBD640B00A0A3EB /* SotosUITests */ = {
+		0FC489812DBD640B00A0A3EB /* TabUITests */ = {
 			isa = PBXGroup;
 			children = (
 				0FC489842DBD640B00A0A3EB /* SotosUITestsLaunchTests.swift */,
 				0FC489822DBD640B00A0A3EB /* SotosUITests.swift */,
 			);
-			path = SotosUITests;
+			path = TabUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0FC489622DBD640900A0A3EB /* Sotos */ = {
+		0FC489622DBD640900A0A3EB /* Tab */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FC489882DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "Sotos" */;
+			buildConfigurationList = 0FC489882DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "Tab" */;
 			buildPhases = (
 				0FC4895F2DBD640900A0A3EB /* Sources */,
 				0FC489602DBD640900A0A3EB /* Frameworks */,
@@ -185,17 +185,17 @@
 			);
 			dependencies = (
 			);
-			name = Sotos;
+			name = Tab;
 			packageProductDependencies = (
 				0F919F2D2DBD94AB00D39102 /* HotKey */,
 			);
 			productName = Sotos;
-			productReference = 0FC489632DBD640900A0A3EB /* Sotos.app */;
+			productReference = 0FC489632DBD640900A0A3EB /* Tab.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0FC489732DBD640B00A0A3EB /* SotosTests */ = {
+		0FC489732DBD640B00A0A3EB /* TabTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FC4898B2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "SotosTests" */;
+			buildConfigurationList = 0FC4898B2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "TabTests" */;
 			buildPhases = (
 				0FC489702DBD640B00A0A3EB /* Sources */,
 				0FC489712DBD640B00A0A3EB /* Frameworks */,
@@ -206,14 +206,14 @@
 			dependencies = (
 				0FC489762DBD640B00A0A3EB /* PBXTargetDependency */,
 			);
-			name = SotosTests;
+			name = TabTests;
 			productName = SotosTests;
-			productReference = 0FC489742DBD640B00A0A3EB /* SotosTests.xctest */;
+			productReference = 0FC489742DBD640B00A0A3EB /* TabTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0FC4897D2DBD640B00A0A3EB /* SotosUITests */ = {
+		0FC4897D2DBD640B00A0A3EB /* TabUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FC4898E2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "SotosUITests" */;
+			buildConfigurationList = 0FC4898E2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "TabUITests" */;
 			buildPhases = (
 				0FC4897A2DBD640B00A0A3EB /* Sources */,
 				0FC4897B2DBD640B00A0A3EB /* Frameworks */,
@@ -224,9 +224,9 @@
 			dependencies = (
 				0FC489802DBD640B00A0A3EB /* PBXTargetDependency */,
 			);
-			name = SotosUITests;
+			name = TabUITests;
 			productName = SotosUITests;
-			productReference = 0FC4897E2DBD640B00A0A3EB /* SotosUITests.xctest */;
+			productReference = 0FC4897E2DBD640B00A0A3EB /* TabUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -252,7 +252,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0FC4895E2DBD640900A0A3EB /* Build configuration list for PBXProject "Sotos" */;
+			buildConfigurationList = 0FC4895E2DBD640900A0A3EB /* Build configuration list for PBXProject "Tab" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -268,9 +268,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0FC489622DBD640900A0A3EB /* Sotos */,
-				0FC489732DBD640B00A0A3EB /* SotosTests */,
-				0FC4897D2DBD640B00A0A3EB /* SotosUITests */,
+				0FC489622DBD640900A0A3EB /* Tab */,
+				0FC489732DBD640B00A0A3EB /* TabTests */,
+				0FC4897D2DBD640B00A0A3EB /* TabUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -312,7 +312,7 @@
 				0F6B54672DBD80B30094E56E /* DOM.swift in Sources */,
 				0F919F302DBD956000D39102 /* TabOverlay.swift in Sources */,
 				0F919F322DBDA5BA00D39102 /* Predictor.swift in Sources */,
-				0FC489672DBD640900A0A3EB /* SotosApp.swift in Sources */,
+				0FC489672DBD640900A0A3EB /* TabApp.swift in Sources */,
 				CAD36F102DBD6E3500E0429F /* CommandPanelSettings.swift in Sources */,
 				CAD36F172DBD7FFE00E0429F /* AppDelegate.swift in Sources */,
 				CAD36F112DBD6E3500E0429F /* CommandPanelViewModel.swift in Sources */,
@@ -342,12 +342,12 @@
 /* Begin PBXTargetDependency section */
 		0FC489762DBD640B00A0A3EB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0FC489622DBD640900A0A3EB /* Sotos */;
+			target = 0FC489622DBD640900A0A3EB /* Tab */;
 			targetProxy = 0FC489752DBD640B00A0A3EB /* PBXContainerItemProxy */;
 		};
 		0FC489802DBD640B00A0A3EB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0FC489622DBD640900A0A3EB /* Sotos */;
+			target = 0FC489622DBD640900A0A3EB /* Tab */;
 			targetProxy = 0FC4897F2DBD640B00A0A3EB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -476,14 +476,14 @@
 		0FC489892DBD640B00A0A3EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 2";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Sotos/Sotos.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Tab/Tab.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Tab/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
@@ -494,7 +494,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ethan.Sotos;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ethan.Tab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -504,14 +504,14 @@
 		0FC4898A2DBD640B00A0A3EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 2";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Sotos/Sotos.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Tab/Tab.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Sotos/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Tab/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G3TY5SUX;
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
@@ -522,7 +522,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ethan.Sotos;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ethan.Tab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -544,7 +544,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sotos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sotos";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tab.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tab";
 			};
 			name = Debug;
 		};
@@ -563,7 +563,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sotos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sotos";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tab.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tab";
 			};
 			name = Release;
 		};
@@ -604,7 +604,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0FC4895E2DBD640900A0A3EB /* Build configuration list for PBXProject "Sotos" */ = {
+		0FC4895E2DBD640900A0A3EB /* Build configuration list for PBXProject "Tab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FC489862DBD640B00A0A3EB /* Debug */,
@@ -613,7 +613,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FC489882DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "Sotos" */ = {
+		0FC489882DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "Tab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FC489892DBD640B00A0A3EB /* Debug */,
@@ -622,7 +622,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FC4898B2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "SotosTests" */ = {
+		0FC4898B2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "TabTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FC4898C2DBD640B00A0A3EB /* Debug */,
@@ -631,7 +631,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FC4898E2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "SotosUITests" */ = {
+		0FC4898E2DBD640B00A0A3EB /* Build configuration list for PBXNativeTarget "TabUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FC4898F2DBD640B00A0A3EB /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Sotos
+//  Tab
 //
 //  Created by Ethan Goodhart on 4/26/25.
 //
